@@ -1,0 +1,17 @@
+[Unit]
+Description=Serial multiplexer
+StartLimitInterval=0
+Before=network-pre.target
+Wants=network-pre.target
+After=local-fs.target
+
+[Service]
+Type=forking
+Restart=always
+RestartSec=1
+User=root
+Group=root
+ExecStart=/usr/sbin/gsmmux -f 128 -b 57600 -p /dev/ttyS1 -w -r -s /dev/modem /dev/ptmx /dev/ptmx /dev/ptmx
+
+[Install]
+WantedBy=network.target
